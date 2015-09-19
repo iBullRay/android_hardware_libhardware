@@ -53,11 +53,13 @@ __BEGIN_DECLS
  * The id of this module
  */
 #define HWC_HARDWARE_MODULE_ID "hwcomposer"
+#define HWC_GPU_HARDWARE_MODULE_ID "gpuhwcomposer"
 
 /**
  * Name of the sensors device to open
  */
 #define HWC_HARDWARE_COMPOSER   "composer"
+#define HWC_GPU_HARDWARE_COMPOSER   "gpucomposer"
 
 typedef struct hwc_rect {
     int left;
@@ -160,6 +162,11 @@ typedef struct hwc_layer_1 {
             /* blending to apply during composition */
             int32_t blending;
 
+			/* for HWC_BLENDING_NONE, alpha is not used.
+             * for HWC_BLENDING_PREMULT and HWC_BLENDING_COVERAGE, it is plane alpha value.
+             * for HWC_BLENDING_DIM, it is the alpha in source color (0,0,0,alpha). */
+            int32_t alpha;
+			
             /* area of the source to consider, the origin is the top-left corner of
              * the buffer */
             hwc_rect_t sourceCrop;
@@ -560,6 +567,13 @@ typedef struct hwc_composer_device_1 {
     /*
      * Reserved for future use. Must be NULL.
      */
+	int (*fbPrePost)(struct hwc_composer_device_1* dev, buffer_handle_t buffer);
+    
+    int (*stretchBlit)(struct hwc_composer_device_1 * dev,	buffer_handle_t Dest,	buffer_handle_t Source,	
+                                                  hwc_rect_t * DestRect,hwc_rect_t * SourceRect,	uint32_t transform);
+
+    int (*getBackBuffer)(buffer_handle_t * backbuffer);
+	 
     void* reserved_proc[4];
 
 } hwc_composer_device_1_t;

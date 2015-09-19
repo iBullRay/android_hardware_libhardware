@@ -99,6 +99,10 @@ enum {
      * composition to the external sink.
      */
     GRALLOC_USAGE_PROTECTED             = 0x00004000,
+	
+	/* Actions */
+	GRALLOC_USAGE_HW_VIDEO				= 0x00100000,
+	GRALLOC_USAGE_HW_CAMERA				= 0x00200000,
 
     /* implementation-specific private usage flags */
     GRALLOC_USAGE_PRIVATE_0             = 0x10000000,
