@@ -28,7 +28,9 @@
 
 __BEGIN_DECLS
 
+#define MAX_FB_NUM 2
 #define GRALLOC_HARDWARE_FB0 "fb0"
+#define GRALLOC_HARDWARE_FB1 "fb1"
 
 /*****************************************************************************/
 
