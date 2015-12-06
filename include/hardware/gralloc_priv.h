@@ -49,9 +49,7 @@ struct private_handle_t : public native_handle {
 
     enum {
         PRIV_FLAGS_FRAMEBUFFER = 0x00000001,
-
-        /* Added by Vivante for Actions-Semi. */
-        PRIV_FLAGS_USES_ION    = 0x00000002
+        PRIV_FLAGS_USES_ION = 0x00000002
     };
 
 #else
@@ -59,33 +57,28 @@ struct private_handle_t {
     native_handle_t nativeHandle;
 #endif
 
-    /* file-descriptors */
-    int     fd;
+    int fd;
 
-    /* ints */
-    int     magic;
-    int     flags;
-    int     size;
-    int     offset;
+    int magic;
+    int flags;
+    int size;
+    int offset;
 
-    /* Added by Vivante for Actions-Semi. */
-    int     base;
-    int     lockState;
-    int     writeOwner;
-    int     pid;
-    int     width;
-    int     height;
-    int     format;
+    int base;
+    int lockState;
+    int writeOwner;
+    int pid;
+    int width;
+    int height;
+    int format;
 
-    /* Added by Vivante for Actions-Semi. */
-    int     phys_addr;
-    int     ion_handle_t;
-    int     usage;
-	ARect	Crop;
-	int     continues;
-	
-    /* Vivante private ints. */
-    int     viv_priv[24];
+    int phys_addr;
+    int ion_handle_t;
+    int usage;
+    ARect Crop;
+    int continues;
+
+    int viv_priv[24];
 
 #ifdef __cplusplus
     static const int sNumInts = 43;
@@ -100,14 +93,14 @@ struct private_handle_t {
         offset(0),
         base(0),
         pid(getpid()),
-		lockState(0),
-	    writeOwner(0),
-	    phys_addr(0),
-	    usage(0)
+        lockState(0),
+        writeOwner(0),
+        phys_addr(0),
+        usage(0)
     {
-    	Crop.left = Crop.top = 0;
-    	Crop.right = Crop.bottom = 0;
-		continues = 0;
+        Crop.left = Crop.top = 0;
+        Crop.right = Crop.bottom = 0;
+        continues = 0;
         version = sizeof(native_handle);
         numInts = sNumInts;
         numFds = sNumFds;

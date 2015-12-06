@@ -25,7 +25,6 @@
 #include <sys/cdefs.h>
 #include <sys/types.h>
 
-
 __BEGIN_DECLS
 
 /**
@@ -33,33 +32,31 @@ __BEGIN_DECLS
  */
  
 #define OVERLAY_HARDWARE_MODULE_ID "overlay"
-#define OVERLAY_HARDWARE   "overlay"
-/*****************************************************************************/
+#define OVERLAY_HARDWARE "overlay"
 
 /* possible overlay formats */
 enum {
-    OVERLAY_FORMAT_RGBA_8888    = HAL_PIXEL_FORMAT_RGBA_8888,
-    OVERLAY_FORMAT_RGB_565      = HAL_PIXEL_FORMAT_RGB_565,
-    OVERLAY_FORMAT_BGRA_8888    = HAL_PIXEL_FORMAT_BGRA_8888,
-    OVERLAY_FORMAT_YUV_420 		  = HAL_PIXEL_FORMAT_YV12,
-    OVERLAY_FORMAT_YUV_420_SP 	= HAL_PIXEL_FORMAT_YCrCb_420_SP,
+    OVERLAY_FORMAT_RGBA_8888 = HAL_PIXEL_FORMAT_RGBA_8888,
+    OVERLAY_FORMAT_RGB_565 = HAL_PIXEL_FORMAT_RGB_565,
+    OVERLAY_FORMAT_BGRA_8888 = HAL_PIXEL_FORMAT_BGRA_8888,
+    OVERLAY_FORMAT_YUV_420 = HAL_PIXEL_FORMAT_YV12,
+    OVERLAY_FORMAT_YUV_420_SP = HAL_PIXEL_FORMAT_YCrCb_420_SP,
     OVERLAY_FORMAT_CbYCrY_422_I = HAL_PIXEL_FORMAT_YCbCr_422_I,
-    OVERLAY_FORMAT_DEFAULT      = 99    // The actual color format is determined
-                                        // by the overlay
+    OVERLAY_FORMAT_DEFAULT = 99 // The actual color format is determined by the overlay
 };
 
 /* values for copybit_set_parameter(OVERLAY_TRANSFORM) */
 enum {
     /* flip source image horizontally */
-    OVERLAY_TRANSFORM_FLIP_H    = HAL_TRANSFORM_FLIP_H,
+    OVERLAY_TRANSFORM_FLIP_H = HAL_TRANSFORM_FLIP_H,
     /* flip source image vertically */
-    OVERLAY_TRANSFORM_FLIP_V    = HAL_TRANSFORM_FLIP_V,
+    OVERLAY_TRANSFORM_FLIP_V = HAL_TRANSFORM_FLIP_V,
     /* rotate source image 90 degrees */
-    OVERLAY_TRANSFORM_ROT_90    = HAL_TRANSFORM_ROT_90,
+    OVERLAY_TRANSFORM_ROT_90 = HAL_TRANSFORM_ROT_90,
     /* rotate source image 180 degrees */
-    OVERLAY_TRANSFORM_ROT_180   = HAL_TRANSFORM_ROT_180,
+    OVERLAY_TRANSFORM_ROT_180 = HAL_TRANSFORM_ROT_180,
     /* rotate source image 270 degrees */
-    OVERLAY_TRANSFORM_ROT_270   = HAL_TRANSFORM_ROT_270
+    OVERLAY_TRANSFORM_ROT_270 = HAL_TRANSFORM_ROT_270
 };
 
 /* names for setParameter() */
@@ -83,23 +80,22 @@ enum {
 /* names for get() */
 enum {
     /* Maximum amount of minification supported by the hardware*/
-    OVERLAY_MINIFICATION_LIMIT      = 1,
+    OVERLAY_MINIFICATION_LIMIT = 1,
     /* Maximum amount of magnification supported by the hardware */
-    OVERLAY_MAGNIFICATION_LIMIT     = 2,
+    OVERLAY_MAGNIFICATION_LIMIT = 2,
     /* Number of fractional bits support by the overlay scaling engine */
-    OVERLAY_SCALING_FRAC_BITS       = 3,
+    OVERLAY_SCALING_FRAC_BITS = 3,
     /* Supported rotation step in degrees. */
-    OVERLAY_ROTATION_STEP_DEG       = 4,
+    OVERLAY_ROTATION_STEP_DEG = 4,
     /* horizontal alignment in pixels */
-    OVERLAY_HORIZONTAL_ALIGNMENT    = 5,
+    OVERLAY_HORIZONTAL_ALIGNMENT = 5,
     /* vertical alignment in pixels */
-    OVERLAY_VERTICAL_ALIGNMENT      = 6,
+    OVERLAY_VERTICAL_ALIGNMENT = 6,
     /* width alignment restrictions. negative number for max. power-of-two */
-    OVERLAY_WIDTH_ALIGNMENT         = 7,
+    OVERLAY_WIDTH_ALIGNMENT = 7,
     /* height alignment restrictions. negative number for max. power-of-two */
-    OVERLAY_HEIGHT_ALIGNMENT        = 8,
+    OVERLAY_HEIGHT_ALIGNMENT = 8,
 };
-/*****************************************************************************/
 
 /**
  * Every hardware module must have a data structure named HAL_MODULE_INFO_SYM
@@ -111,14 +107,14 @@ struct overlay_module_t {
 };
 
 typedef void * overlay_buffer_t;
-/*****************************************************************************/
+
 /**
  * Every device data structure must begin with hw_device_t
  * followed by module specific public methods and attributes.
  */
 typedef struct overlay_device {
     struct hw_device_t common;
-        
+
     int (*prepare)(struct overlay_device *dev,hwc_layer_t *layer);
     
     int (*set)(struct overlay_device *dev,hwc_layer_t *layer);
@@ -127,7 +123,7 @@ typedef struct overlay_device {
     
 } overlay_device_t;
 
-struct overlay_context_t {		
+struct overlay_context_t {      
     overlay_device_t device;
     
     /* our private state goes below here */
@@ -138,32 +134,30 @@ struct overlay_context_t {
     int isReady;
     int isFirst;
     
-    /*out put window informations */
+    /* out put window informations */
     uint32_t posX ;
-		uint32_t posY ;
-		uint32_t posW ;
-		uint32_t posH ;
-		uint32_t rotation;
-				
-		/*image informations */
-		uint32_t imageW ;
-		uint32_t imageH;
-		uint32_t format;
-		
-		/*crop informations */
-		uint32_t cropX;
-		uint32_t cropY;
-		uint32_t cropW;
-		uint32_t cropH;
-    
+    uint32_t posY ;
+    uint32_t posW ;
+    uint32_t posH ;
+    uint32_t rotation;
 
+    /* image informations */
+    uint32_t imageW ;
+    uint32_t imageH;
+    uint32_t format;
+
+    /* crop informations */
+    uint32_t cropX;
+    uint32_t cropY;
+    uint32_t cropW;
+    uint32_t cropH;
 };
 
 /** convenience API for opening and closing a device */
 static inline int overlay_open(const struct hw_module_t* module,
         overlay_device_t** device) {
     return module->methods->open(module,
-            OVERLAY_HARDWARE, (struct hw_device_t**)device);
+        OVERLAY_HARDWARE, (struct hw_device_t**)device);
 }
 
 static inline int overlay_close(overlay_device_t * device) {
@@ -172,4 +166,4 @@ static inline int overlay_close(overlay_device_t * device) {
 
 __END_DECLS
 
-#endif  // ANDROID_OVERLAY_INTERFACE_H
+#endif // ANDROID_OVERLAY_INTERFACE_H
